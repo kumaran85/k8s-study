@@ -1,0 +1,221 @@
+##########################
+change-cause > Study
+
+Helm ->k8s package manager
+#############################
+
+Kubernetes Master has three componenets: 
+1. kube-apiserver 
+2. kube-controller-manager, 
+3. kube-scheduler.
+
+Kubernetes non-master runs two processes. 
+  1. kubelet-proxy which is the networking services on each node
+  2. kubelet ->communicates to master.
+  
+Basic k8s objects include:
+1. pod
+2. volume
+3. service 
+4. Namespace
+
+Controllers build upon the basic objects and provide additional functionality.
+1. Deployment
+2. daemonset
+3. statefulset
+4. replicaset
+5. job
+
+Default container runtime used by k8s is docker.
+
+kubectl is the tool used to manage k8s objects such as pods, repolicasets and services. Kubectl used to verify overall health check of cluster.
+
+controller-manager is reponsible for managing all replicas of service, healthy.
+
+scheduler is reponsible for placing pods onto different nodes into cluster.
+etcs server is the storage for the cluster where all of API objects stored.
+
+worker nodes where containers wiil run. 
+
+k8s proxy is responsible for routing network traffic to load balanced services in the cluster.
+
+All of the k8s compoents run in kube-system namespace.
+
+k8s runs a DNS server which provide naming and discovery for the services defined in the cluster. which also runs as a replicated service.
+
+kubectl -> To create objects and interact with k8s API.
+
+Consequently, Kubernetes groups multiple containers into a single, atomic unit called a Pod.
+
+Multiple Pods can be placed on the same machine as long as there are sufficient resources.
+Once scheduled to a node, Pods don’t move and must be explicitly destroyed and rescheduled.
+
+Writing Pod manifests in YAML and JSON. Use kubectl to create it, then Pod will be running in healthy nods in the cluster.
+
+kubectl get pods <ready is 1/1 number of ready containers and number of times restarted.
+
+All pods having termination grace period 30 sec by default.
+PersistentVolumes to store data persistently across multilple instances of pods.
+
+###########################
+Containers that fail liveness checks are restarted. Readiness describes when a container is ready to serve user requests.
+
+In addition to HTTP health checks k8s supports tcpSocket health checks. And allows "exec" probes using scripts based.
+
+Manifest parameter "requests" specified minimum value only, and "limits" 
+
+CPU shares are implememted using cpu-shares feature in Linux Kernel.
+
+When system runs OOM (Out-Of-Memory), kubelet terminates containers whose requesting more memory and restarts it with minimum memory.
+
+When a pod deleted or container restarts data will be destroyed. Then proceed with persistent volume.
+
+volumes section in pod for all containers. volumeMounts section per container level with different mount points.
+
+#############
+Label can be attached to k8s objects like replicasets, pods
+Annotation can be attached and having nonidentifying info that can be viewed using tools.
+
+Label have key/value pairs. key label broken into two parts 1. optional prefix, ( if prefix specified it should be subdomain  
+then followed by slash key name )
+
+Annotations are used while doing rolling deployments, provide necessary info to attaing previous state.
+
+Cluster IP's are staable virtual IP's which balancing load across endpoints using kube-proxy.
+Cluster IP cannot be modified, either recrete service or delete it. Using --server-cluster-ip flag on the kube-apiserver binary.
+
+Pods managed by ReplicaSets are automatically rescheduled under certain failure conditions such as node failures and network partitions.
+
+ReplicaSets use label queries to identify set of pods.
+
+Horizontal pod autoscaling(HPA) using heapster presence, used to scale up based on CPU/RAM consumption.
+Horizontal scaling increasing number of repolicasets.
+
+############################
+Node controler is master components. Which maanages node monitoring, node health-check. 
+Node controller checks default timeout 40s and node unreachable then after 5m evicting nodes from registered lists.
+Using --node-monitor-period, node controller checks each node.
+
+Node-lease and Node-status are heartbats from node. Node status reporting to master only when 
+
+If you find yourself wanting a single Pod per node, then a DaemonSet is the correct Kubernetes resource to use. 
+Likewise, if you find yourself building a homogeneous replicated service to serve user traffic, then a ReplicaSet is probably the right Kubernetes resource to
+use.
+
+In pod spece , we can mention node name to run those pods. As a result, pods created by daemonsets are  ignored by k8s scheduler. 
+
+Like ReplicaSets, DaemonSets are managed by a reconciliation control loop that measures the desired state (a Pod is present on all nodes) with the observed state
+(is the Pod present on a particular node?).
+
+Unlike ReplicaSets, DaemonSets will create Pods on every node in the cluster by default unless a node selector is used. While adding other nodes into cluster, 
+daemonset pods will be deployed into new node.
+
+Running daemonset on selector nodes using nodeselector on pod spec with label. Adding same label to additional nodes make pod deployed into those nodes.
+Even inverse also true. Like removing label from node causing pod will be removed by daemonset controller.
+
+###############################################
+
+Daemonset can now be rolled out using spec.updateStrategy.type field and value is RollingUpdate. By default is delete method is available.
+Two parameters controlling rolling update of daemonset,
+1. spec.minReadySeconds -> to ensure that your Pod is truly healthy before the rollout proceeds.
+2. spe.updateStrategy.type
+
+spec.updateStrategy.rollingUpdate.maxUnavailable is app dependant and maxUnavailable is 1 as good approach change only while rolloit speed is low.
+
+########################################
+Deployments:
+
+The Deployment object exists to manage the release of new versions.
+Using Deployments you can simply and reliably roll out new software versions without downtime or errors. The actual mechanics of the software rollout
+performed by a Deployment is controlled by a Deployment controller that runs in the Kubernetes cluster itself.
+
+ReplicaSets manage Pods, Deployments manage ReplicaSets.
+Two strategies supported by deployments:
+1. RollingUpdate
+2. Recreate
+
+In Pod Template section, image spec will be DOCKER_ID/image. kubectl run didn't create pods directly. kubectl creates deployment, which started pods.
+if there are too many pods running, replica set controller either stops or start it.
+
+k8s controllers continually check each resource against the actual state of cluster and make necessary sync to cluster this process called,
+reconciliation loop.
+k8s scheduler is reponsible for scheduling pods in according to pods resourcs requests. and kubelet will take care of those pods running on that node.
+
+To connect to created pods , service is being used.
+Pod IP address will change when pods restarted. 
+Most common operations on Deployment is scaling and application update.
+#######################################################
+PODS:
+   
+
+
+#################################################
+
+Service:
+
+servid kind created and mapped to pods using labels. without labels using Endpoints to other service.
+kube-proxy is responsible for implementing a form of virtual IP for Services.
+
+kube-proxy runs on mode a. user space proxy mode (round robin mode) b. iptables proxy mode (random) c. IPVS proxy mode
+Use pod readines prob to identify healthy and kube-proxy in iptables mode only sees backend healthy.
+Kubernetes v1.8 added ipvs proxy mode.
+
+IPVS mode provides high performance and network throughput and different load balancing method rr , sh (source hashing), dh( destination) nq (never queue)
+sed (shortest expected delay lc least connection.
+service.spec.sessionAffinity to “ClientIP to send particular pods ech time and service.spec.sessionAffinityConfig.clientIP.timeoutSeconds stickiness.
+
+service port name msut contain with alphanumeric and -.  Port names must also start and end with an alphanumeric character.
+
+using 2 methods k8s find service a. ENV variable b. DNS
+When using env variable method, before creating pods first create service using env vars.
+
+Headless service doesn't need load balancing and single IP. Using selectors traffic wll reach pods backend.
+without selectors creating A and CNAME for that service  
+################################################
+
+DNS for servvies and pods:
+
+Kubernetes DNS schedules a DNS Pod and Service on the cluster, and configures the kubelets to tell individual containers to use the DNS Service’s IP 
+to resolve DNS names.
+
+1. A records: Client pod's DNS search include pods own namespace and cluster's default domain.
+Normal services will be namespace.cluster.domain, which resolves to cluster IP of the service.
+Headless (Without cluster IP) services are resolving to set of IPs of pods selected by the service.
+
+2. SRV records:
+    This is created for named ports and the form is _my-port-name._my-port-protocol.my-svc.my-namespace.svc.cluster-domain.example.
+	
+
+
+#################
+PersistentVolumes (PV) and PersistentVolumesClaims (PVC):
+
+PV is s piece of storage in the cluster.
+PVC is a request for storage by a user. Claims can request specific size and access mode.
+PVS are resources in cluster. Provisioned by 2 ways 1 .static 2 .Dynamically using storage class . supported FS for PV is ext3, ext4, xfs.
+Volumes reclaim policy a. recylced,(Manual reclamation)b. retained, (NFS and HostPath supports) c. deleted( Default for AWS/Azure/openstack)
+
+When the PVC deleted, PV considered as released. But not available for another claim, because data still exists. 
+Default policy is delete for dynamically storage  class. we can change to retain.
+allowVolumeExpansion set as true, then PVC can be expanded.
+Volumes can be resized if FS is ext3, ext4, XFS and PVC should bein RW mode. FS expansion can be done either when pod is starting up or When pod is running 
+and undelying FS supports online expansion.
+
+Spec:
+Capacity
+1. volumeMode a. block to use raw devices b. filesystem to use FS
+The access modes are:
+
+ReadWriteOnce – the volume can be mounted as read-write by a single node (RWO)
+ReadOnlyMany – the volume can be mounted read-only by many nodes (ROX)
+ReadWriteMany – the volume can be mounted as read-write by many nodes(RWX)
+
+CephFS can be mounted by multiple writers simultaneouly.
+A feature of PD is that they can be mounted as read-only by multiple consumers simultaneously.
+NFS can be mounted by multiple writers simultaneously.
+
+
+#######################################
+
+Storage class:
+ It contains fields a. provisioner b. parameters c. reclaimpolicy

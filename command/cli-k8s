@@ -1,0 +1,127 @@
+kubectl version.
+kubectl help <command name>
+kubectl get nodes
+kubectl get pods -o wide
+kubectl cluster-info
+kubectl get compoenetstatuses ->To verify clsuter is healthy.
+#######################################################
+
+Adding Node into cluster:
+kubelet with --register-node=true (default) and --kubeconfig (provifing crdentials) --node-ip enter Node IP,  and 
+--node-status-update-frequency mentions how often kubelet posts node status to master.
+
+kubelet running on node responsible for starting its containers.
+
+#############################################################
+kubectl describe nodes node-name(Name of nodes).
+kubectl get daemonSets --name-space=kube-system kube-proxy.
+kubectl get services --namespace=kube-system kube-dns
+kubectl get deployments --namespace=kube-system kube-dns
+kubectl proxy ->Launches UI for k8s.
+
+kubectl get namespace -> To verify namespace
+kubectl config set-context kumaran -> creating context without namespace.
+kubectl config set-context kumaran --namespace anand ->creating context with namespace.
+kubectl config use-context kumaran (switching to kumaran context)
+kubectl config current-context 
+kubectl config get-contexts.
+kubectl config get-clusters.
+
+#####################################################
+kubectl apply -f file.yml -> To create objects.
+
+To udpate objects use same above command.
+kubectl delete  -f file.yml.
+kubectl delete <resource name> <obj name>
+kubectl describe node <node-name>   
+#########################
+Adding tags and annotations to k8s pods 
+
+kubectl label pods <pod name> color=red 
+kubectl label pods <pod name> -color -> To remove added tags.
+
+kubectl logs <pod-name> 
+
+kubectl exec -it <pod-name> -- bash
+
+kubectl cp <pod-name>:path /localhost -> copying files to localhost from running pods.
+
+kubectl get pods -> To get running pods.
+kubectl delete deployments/kuard <pod name>
+
+###################################################
+Creating pods using YAML and JSON
+kubectl apply -f <file name>.
+
+kubectl describe pods <pods name>
+kubectl delete pods/name or kubectl delete -f <file name>. <Used to create Pods>
+
+kubectl port-forward <pod name> 8080:8080 (creating secure tunnel from local Machine to pods running nodes).
+
+####################################################
+Copying files to and from container
+kubectl cp <pod name>:/temp/log.txt /root
+kubectl cp /tmp/curl-2.4.x86.rpm <pod-name>:/curl-2.4.x86.rpm
+
+kubectl label deployments <name> "infra=guaca"
+kubectl label deployments <name> "infra-" -> To remove labels 
+kubectl get deployments --show-labels
+kubectl get deployments --selector="ver=2" -> To identify particular version [--selector shorthands is -l]
+kubectl get deployments --selector="ver=2,app=infra" -> using two labels if both maps then it will return value else false like AND operation.
+kubectl get deployments --selectop="app in (arp,infra)" -> app is key (arp, infra is velue ) [showing app  key set to which key-pairs in pods ]
+kubectl get deployments --selector='!ver' -> shows except ver pods. use single apostorphe
+kubectl delete deployments --selector="app" [using key based]
+
+###################################################
+kubectl expose - > Creating service 
+kubectl expose deployment test
+ALPACA_POD=$(kubectl get pods -l app=alpaca -o jsonpath='{.items[0].metadata.name}')
+kubectl port-forward $ALPACA_POD 48858:8080
+kubectl edit deployment/alpaca-prod -> It will delete and re-create pods.
+kubectl get endpoints alpaca-prod --watch
+kubectl edit service alpaca-prod  [Add NodePorts to allow new traffic in]
+kubectl describe endpoints alpaca-prod
+kubectl delete services,deployments -l app
+
+#########################################
+kubectl describe rs <pod-name> -> [rs - replica set]
+kubectl get pods -o <pod-name> -o yaml
+kubectl scale kuard --replicas=4
+kubectl scale --replicas=3 rs/foo                                 # Scale a replicaset named 'foo' to 3
+kubectl scale --replicas=3 -f foo.yaml                            # Scale a resource specified in "foo.yaml" to 3
+kubectl scale --current-replicas=2 --replicas=3 deployment/mysql  # If the deployment named mysql's current size is 2, scale mysql to 3
+kubectl scale --replicas=5 rc/foo rc/bar rc/baz                   # Scale multiple replication controllers
+
+############################################
+
+kubectl autoscale rs <pod-name> --min=2 --max=5 --cpu-percent=80 
+kubectl get hpa [hpa ->horizontalpodautoscaler]
+kubectl delete rs <pod-name>
+kubectl delete rs <pod-name> --cascade=false
+
+##############################################
+kubectl cordon <<node-name>   -> To mark node as unschedulable (not affecting running pods and new pods are not allowed into it.)
+kubectl label nodes <node-name> app=infra -> Adding label to Node.
+
+kubectl rollout status daemonSets <daemonsets name>
+kubectl delete -f daemon.yml (which will delete pods managed by daemonsets so set --cascade=false to ensure deleting only daemonsets.
+
+
+###############################################
+
+Deployments:
+
+kubectl scale deployments nginx --replicas=2
+kubectl get replicasets --selector=run=nginx
+kubectl rollout status deployments nginx.
+kubectl rollout pause deployments nginx
+kubectl rollout resume deployments nginx
+kubectl rollout history deployment nginx
+kubectl rollout history deployment nginx --revision=2
+kubectl rollout undo deployments nginx
+
+##############################################
+Volumes:
+
+kubectl get pv 
+kubectl patch pv <PV-Name> -p '{"spec":{"PersistentVolumeReclaimPolicy":"Retain"}}'
