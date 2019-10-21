@@ -144,6 +144,20 @@ k8s scheduler is reponsible for scheduling pods in according to pods resourcs re
 To connect to created pods , service is being used.
 Pod IP address will change when pods restarted. 
 Most common operations on Deployment is scaling and application update.
+revisionHistoryLimit in Deployments Specification.
+
+Deployment Supports two different rollout strategies:
+
+1. Recreate
+2. RollingUpdate
+
+Recreate: 
+     Just updating new S/W version using new Image and terminates old repica sets. Minimal Downtime is required. So Better use in 
+Test, developments.
+
+Rolling Update:
+
+
 #######################################################
 PODS:
    
