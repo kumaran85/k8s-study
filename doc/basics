@@ -134,6 +134,8 @@ Two strategies supported by deployments:
 1. RollingUpdate
 2. Recreate
 
+The Deployment controller examines the Pod’s status as determined by its readiness checks.
+
 In Pod Template section, image spec will be DOCKER_ID/image. kubectl run didn't create pods directly. kubectl creates deployment, which started pods.
 if there are too many pods running, replica set controller either stops or start it.
 
@@ -156,6 +158,16 @@ Recreate:
 Test, developments.
 
 Rolling Update:
+  Based on maxUnavailable and maxSurge. maxUnavailable as 4 to replace those pods. then remaining pods will be available for user traffic.
+  maxUnavailable set to 100%, which functions as same as recreate. 
+  Use maxUnavaiable percentage based, like 50% ,75%. 
+  maxSurge creating new resources temporarily for rollout changes.
+  
+  minReadySeconds to set Deployment must wait for this seconds before udpate next pods.
+  progressDeadLineSeconds If any bug on New version, pod will take time to become ready. it causes dealy (stall) on roll-out.
+  Hence set this parameter. if any particular stage in the rollout fails, within 10 mins , it will halt the roll-out function.
+  
+  you can use the --cascade=false flag to exclusively delete the Deployment object. 
 
 
 #######################################################
