@@ -1,0 +1,216 @@
+apiVersion: v1
+kind: Pod
+metadata:
+name: kuard
+spec:
+containers:
+- image: gcr.io/kuar-demo/kuard-amd64:1
+name: kuard
+livenessProbe:
+httpGet:
+path: /healthy
+port: 8080
+initialDelaySeconds: 5
+timeoutSeconds: 1
+periodSeconds: 10
+failureThreshold: 3
+ports:
+- containerPort: 8080
+name: http
+protocol: TCP
+
+####################################################
+
+apiVersion: v1
+kind: Pod
+metadata:
+name: kuard
+spec:
+containers:
+- image: gcr.io/kuar-demo/kuard-amd64:1
+name: kuard
+resources:
+requests:
+cpu: "500m"
+memory: "128Mi"
+ports:
+- containerPort: 8080
+name: http
+protocol: TCP
+
+###########################################################
+
+apiVersion: v1
+kind: Pod
+metadata:
+name: kuard
+spec:
+containers:
+- image: gcr.io/kuar-demo/kuard-amd64:1
+name: kuard
+resources:
+requests:
+cpu: "500m"
+memory: "128Mi"
+limits:
+cpu: "1000m"
+memory: "256Mi"
+ports:
+- containerPort: 8080
+name: http
+protocol: TCP
+
+#########################################################
+
+
+kind: Pod
+metadata:
+name: kuard
+spec:
+volumes:
+- name: "kuard-data"
+hostPath:
+path: "/var/lib/kuard"
+containers:
+- image: gcr.io/kuar-demo/kuard-amd64:1
+name: kuard
+volumeMounts:
+- mountPath: "/data"
+name: "kuard-data"
+ports:
+- containerPort: 8080
+name: http
+protocol: TCP
+
+
+########################################################
+
+# Rest of pod definition above here
+volumes:
+- name: "kuard-data"
+nfs:
+server: my.nfs.server.local
+path: "/exports"
+
+#######################################################
+
+apiVersion: v1
+kind: Pod
+metadata:
+name: kuard
+spec:
+volumes:
+- name: "kuard-data"
+nfs:
+server: my.nfs.server.local
+path: "/exports"
+containers:
+- image: gcr.io/kuar-demo/kuard-amd64:1
+name: kuard
+ports:
+- containerPort: 8080
+name: http
+protocol: TCP
+resources:
+requests:
+cpu: "500m"
+memory: "128Mi"
+limits:
+cpu: "1000m"
+memory: "256Mi"
+volumeMounts:
+- mountPath: "/data"
+name: "kuard-data"
+livenessProbe:
+httpGet:
+path: /healthy
+port: 8080
+initialDelaySeconds: 5
+timeoutSeconds: 1
+periodSeconds: 10
+failureThreshold: 3
+readinessProbe:
+httpGet:
+path: /ready
+port: 8080
+initialDelaySeconds: 30
+timeoutSeconds: 1
+periodSeconds: 10
+failureThreshold: 3
+
+######################################################
+
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+name: kuard
+spec:
+replicas: 1
+template:
+metadata:
+labels:
+app: kuard
+version: "2"
+spec:
+containers:
+- name: kuard
+image: "gcr.io/kuar-demo/kuard-amd64:2"
+
+##################################################
+
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+name: fluentd
+namespace: kube-system
+labels:
+app: fluentd
+spec:
+template:
+metadata:
+labels:
+app: fluentd
+spec:
+containers:
+- name: fluentd
+image: fluent/fluentd:v0.14.10
+resources:
+limits:
+memory: 200Mi
+requests:
+cpu: 100m
+memory: 200Mi
+volumeMounts:
+- name: varlog
+mountPath: /var/log
+- name: varlibdockercontainers
+mountPath: /var/lib/docker/containers
+readOnly: true
+terminationGracePeriodSeconds: 30
+volumes:
+- name: varlog
+hostPath:
+path: /var/log
+- name: varlibdockercontainers
+hostPath:
+path: /var/lib/docker/containers
+
+###############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-ebs
+spec:
+  containers:
+  - image: k8s.gcr.io/test-webserver
+    name: test-container
+    volumeMounts:
+    - mountPath: /test-ebs
+      name: test-volume
+  volumes:
+  - name: test-volume
+    # This AWS EBS volume must already exist.
+    awsElasticBlockStore:
+      volumeID: <volume-id>
+      fsType: ext4
+###########################################
