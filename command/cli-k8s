@@ -4,6 +4,7 @@ kubectl get nodes
 kubectl get pods -o wide
 kubectl cluster-info
 kubectl get compoenetstatuses ->To verify clsuter is healthy.
+kubectl api-versions
 #######################################################
 
 Adding Node into cluster:
