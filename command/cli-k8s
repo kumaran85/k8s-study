@@ -16,7 +16,9 @@ kubelet running on node responsible for starting its containers.
 #############################################################
 kubectl describe nodes node-name(Name of nodes).
 kubectl explain deployment
-kubectl explain daemonsets
+kubectl explain daemonsets 
+kubectl explain no.spec -> show the spec field of node
+kubectl explain no --recursive -> shows the all field for node 
 kubectl aoi-resources -> list of objects
 kebectl api-resources api-group extensions -o wide 
 kubectl api-resources api-group=apps
