@@ -14,6 +14,13 @@ kubelet with --register-node=true (default) and --kubeconfig (provifing crdentia
 
 kubelet running on node responsible for starting its containers.
 
+#################
+
+Namespace:
+
+kubectl create namespace testing
+kubectl api-resources --namespaced=true -> shows which are the objects are namespaced
+
 #############################################################
 kubectl describe nodes node-name(Name of nodes).
 kubectl explain deployment
@@ -95,6 +102,7 @@ kubectl delete services,deployments -l app
 #########################################
 kubectl describe rs <pod-name> -> [rs - replica set]
 kubectl get pods -o <pod-name> -o yaml
+kubect scale deployment name --replicas=5 name-> Deployment name
 kubectl scale kuard --replicas=4
 kubectl scale --replicas=3 rs/foo                                 # Scale a replicaset named 'foo' to 3
 kubectl scale --replicas=3 -f foo.yaml                            # Scale a resource specified in "foo.yaml" to 3
