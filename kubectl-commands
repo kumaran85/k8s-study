@@ -1,0 +1,229 @@
+  487  kubectl version
+  498  kubectl get nodes
+  499  kubectl get nodes
+  501  kubectl get pods 
+  502  kubectl get deploy
+  503  kubectl get rs 
+  504  kubectl get ns
+  505  kubectl get pods --namespace=kube-public
+  506  kubectl get ns
+  507  kubectl create namespace --name=kumaran
+  508  kubectl create namespace --help
+  509  kubectl create namespace testing
+  510  kubectl get ns 
+  511  kubectl get deploy
+  512  kubectl delete nginix 
+  513  kubectl delete nginx 
+  514  kubectl delete deployment nginx 
+  515  kubectl get rs
+  516  kubectl images 
+  519  kubectl explain deployment 
+  523  kubectl explain deployment.spec
+  524  kubectl explain deployment 
+  525  kubectl explain deployment.metadata
+  526  kubectl explain deployment.spec
+  528  kubectl create -f nginx.yml 
+  530  kubectl create -f nginx.yml 
+  532  kubectl create -f nginx.yml 
+  534  kubectl create -f nginx.yml 
+  536  kubectl create -f nginx.yml 
+  538  kubectl create -f nginx.yml 
+  540  kubectl create -f nginx.yml 
+  541  kubectl get deploy 
+  542  kubectl get deploy 
+  543  kubectl get deploy 
+  544  kubectl get deploy 
+  545  kubectl get deploy 
+  546  kubectl get deploy 
+  547  kubectl get rs
+  548  kubectl get rs nginx-deployment
+  549  kubectl get rs ginx-deploymen
+  550  kubectl get rs nginx-deploymen
+  551  kubectl get rs nginx-deployment
+  552  kubectl get rs 
+  553  kubectl get pods
+  555  kubectl apply -f nginx.yml 
+  556  kubectl apply nginx.yml 
+  557  kubectl apply -f nginx.yml 
+  558  kubectl get rs
+  560  kubectl apply -f nginx.yml 
+  561  kubectl get rs
+  562  kubectl describe nginx-deployment
+  563  kubectl describe deployments nginx-deployment
+  566  kubectl apply -f nginx.yml 
+  568  kubectl apply -f nginx.yml 
+  570  kubectl get ns
+  571  kubectl apply -f nginx.yml 
+  573  kubectl apply -f nginx.yml 
+  575  kubectl apply -f nginx.yml 
+  577  kubectl apply -f nginx.yml 
+  578  kubectl rs
+  579  kubectl get rs
+  580  kubectl get deploy 
+  581  kubectl get rs
+  582  kubectl get rs
+  583  kubectl get rs
+  584  kubectl get rs
+  585  kubectl get rs
+  586  kubectl get rs
+  587  kubectl get rs
+  589  kubectl get deployment 
+  590  kubectl get pods 
+  591  kubectl get rs
+  592  kubectl get rs
+  593  kubectl get rs
+  594  kubectl describe deployment nginx-deployment
+  595  kubectl get rs
+  596  kubectl delete nginx-deployment-5b87848979
+  597  kubectl delete nginx-deployment-5b87848979
+  598  kubectl delete rs nginx-deployment-5b87848979
+  599  kubectl delete nginx-deployment-5b87848979
+  600  kubectl get rs
+  601  kubectl get rs
+  603  kubectl apply -f nginx.yml 
+  605  kubectl apply -f nginx.yml 
+  607  kubectl delete -f nginx.yml 
+  608  kubectl get pods 
+  609  kubectl get pods 
+  610  kubectl get pods 
+  611  kubectl get pods 
+  612  kubectl get pods 
+  613  kubectl get pods 
+  614  kubectl get pods 
+  615  kubectl get pods 
+  616  kubectl get pods 
+  617  kubectl get pods 
+  618  kubectl get pods 
+  619  kubectl get pods 
+  620  kubectl get pods 
+  621  kubectl get pods --namspace=testing
+  622  kubectl get pods --namespace=testing
+  624  kubectl apply -f nginx.yml 
+  625  kubectl get rs
+  626  kubectl get pods
+  627  kubectl get pods --namespace=testing
+  628  kubectl get pods --namespace=testing
+  630  kubectl delete namespace testing 
+  631  kubectl get pods --namespace=testing
+  632  kubectl api-resources --namespaced=true
+  633  kubectl api-resources --namespaced=false
+  634  kubectl api-resources --namespaced=true
+  635  kubectl get pods -o wide 
+  636  kubectl create namespace testing 
+  637  kubectl apply -f nginx.yml 
+  638  kubectl get pods --namespace=testing 
+  639  kubectl get pods --namespace=testing 
+  640  kubectl get pods --namespace=testing 
+  641  kubectl get pods --namespace=testing 
+  642  kubectl get pods --namespace=testing 
+  643  kubectl get pods --namespace=testing 
+  644  kubectl get pods --namespace=testing 
+  645  kubectl get rs 
+  646  kubectl get rs --namespace=testing 
+  647  kubectl get pods --namespace=testing  -o wide 
+  648  kubectl get svc 
+  649  kubectl network
+  650  kubectl --help
+  652  kubectl explin services 
+  653  kubectl explin service
+  654  kubectl explain service
+  655  kubectl explin service.metadata
+  656  kubectl explain service.metadata
+  657  kubectl explain service.spec
+  658  kubectl explain service.spec.ports
+  659  kubectl get pods --namespace=testing  -o wide 
+  660  kubectl get pods --namespace=testing  
+  661  kubectl get svc --namespace=testing  
+  662  kubectl explain pod
+  663  kubectl explain pod.metadata
+  664  kubectl explain pod.spec
+  665  kubectl explain pod.spec.containers
+  669  kubectl apply -f pod.yml 
+  670  kubectl get deploy 
+  671  kubectl get pods
+  672  kubectl delete pods linux-server
+  674  kubectl get pods
+  676  kubectl apply -f pod.yml 
+  677  kubectl get pods
+  678  kubectl get pods
+  679  kubectl get pods
+  680  kubectl get pods
+  681  kubectl apply -f pod.yml 
+  682  kubectl get pods
+  683  kubectl get pods
+  686  kubectl apply -f pod.yml 
+  687  kubectl get pods
+  688  kubectl get pods
+  689  kubectl get pods
+  690  kubectl get pods
+  691  kubectl get pods
+  692  kubectl get pods
+  693  kubectl apply -f pod.yml 
+  694  kubectl get pods
+  695  kubectl get pods
+  696  kubectl get pods
+  701  kubectl explain replicaset
+  706  kubectl apply -f replicaset.yml pod.yml 
+  707  kubectl apply -f replicaset.yml 
+  712  kubectl apply -f replicaset.yml 
+  714  kubectl apply -f replicaset.yml 
+  716  kubectl apply -f replicaset.yml 
+  718  kubectl apply -f replicaset.yml 
+  720  kubectl apply -f replicaset.yml 
+  722  kubectl apply -f replicaset.yml 
+  727  kubectl apply -f replicaset.yml 
+  729  kubectl apply -f replicaset.yml 
+  730  kubectl get pods 
+  732  kubectl get pods -o wide 
+  733  kubectl get pods -o yaml
+  736  kubectl get pods 
+  737  kubectl exec -it apache-replica-llwj9 -- sh 
+  738  kubectl exec -it apache-replica-llwj9 -- sh 
+  739  kubectl api-resources
+  740  kubectl version 
+  741  kubectl get nodes 
+  742  kubectl api-resources 
+  743  kubectl api-resources --namepsaces=true 
+  744  kubectl api-resources --namepsaced=true 
+  745  kubectl api-resources --namespaced=true 
+  746  kubectl api-resources --namespaced=false
+  747  kubectl create namespace linux-k8s
+  748  kubectl get ns 
+  749  kubectl get no
+  750  kubectl get node
+  751  kubectl explain deployment 
+  752  kubectl explain deployment.spec
+  753  kubectl explain deployment.spec.template
+  754  kubectl explain pod
+  755  kubectl get pods 
+  756  kubectl delete pods linux-server 
+  758  kubectl get ns 
+  759  kubectl apply -f nginx.yml 
+  760  kubectl get pods --namespace=testing 
+  761  kubectl delete deployment nginx-deployment 
+  762  kubectl delete deployment nginx-deployment --namespace=testing 
+  763  kubectl get pods --namespace=testing 
+  764  kubectl get pods --namespace=testing 
+  766  kubectl apply -f nginx.yml 
+  767  kubectl get pods 
+  768  kubectl get pods --namespace=testing 
+  769  kubectl get pods --namespace=testing 
+  770  kubectl get pods --namespace=testing 
+  771  kubectl get pods --namespace=testing 
+  772  kubectl get pods --namespace=testing 
+  773  kubectl get pods --namespace=testing 
+  776  kubectl apply -f nginx.yml 
+  777  kubectl get pods --namespace=testing 
+  778  kubectl get rs --namespace=testing
+  780  kubectl get pods --namespace=testing 
+  781  kubectl apply -f nginx.yml 
+  782  kubectl get pods --namespace=testing 
+  784  kubectl explain deployment 
+  785  kubectl explain deployment.metadata
+  786  kubectl explain deployment.template 
+  787  kubectl explain deployment
+  788  kubectl explain deployment.spec
+  789  kubectl get nodes -o wide 
+  790  kubectl get nodes -o yaml 
+  791  kubectl get pods -o yaml
+  792* kubectl describe pods --namespace=testign
