@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: test-service
+  namespace: testing
+spec:
+  selector:
+     app: web
+  ports:
+   -  port: 4567
+      protocol: TCP
+      targetPort: 80

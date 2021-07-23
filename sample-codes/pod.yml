@@ -1,0 +1,14 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: linux-server
+  namespace: default
+  labels:
+    flavor: ubuntu
+spec:
+  containers:
+   - name: linux-container
+     image: httpd
+     ports:
+      - containerPort: 3456
+  

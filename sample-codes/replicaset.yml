@@ -1,0 +1,20 @@
+kind: ReplicaSet
+apiVersion: apps/v1
+metadata:
+  name: apache-replica
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+     flavor: ubuntu   
+  template:
+    metadata:
+      labels:
+        flavor: ubuntu
+    spec:
+     containers:
+       - name: web-server
+         image: httpd
+         ports:
+          - containerPort: 8080  
+
